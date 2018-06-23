@@ -35,6 +35,31 @@ pre
 						color: #fff
 .hero-body
 	padding: 1rem 1.5rem
+#maincode .body-control
+	position: relative
+	overflow: hidden
+	height: calc(100vh - 97px)
+	padding-top: 1rem
+	padding-bottom: 1rem
+	padding-right: .75rem
+	&:after
+		position: absolute
+		content: 'XSLT Builder - Tạo file XSLT dễ dàng và nhanh chóng. Vui lòng chọn module để tiếp tục.'
+		display: flex
+		align-items: center
+		justify-content: center
+		text-align: center
+		top: 0 
+		left: 0
+		width: 100%
+		height: 100%
+		background: rgba(255,255,255,1)
+		z-index: 100
+		padding: 4rem
+	&.active 
+		overflow-y: scroll
+		&:after 
+			content: none
 #maincode .column
 	padding-bottom: 0
 	padding-left: 0
@@ -44,13 +69,6 @@ pre
 	height: calc(100vh - 97px)
 	overflow: hidden
 	font-size: .85rem
-.body-control
-	height: calc(100vh - 97px)
-	padding-top: 1rem
-	padding-bottom: 1rem
-	padding-right: .75rem
-	overflow-y: scroll
-
 .field
 	position: relative
 	#add 

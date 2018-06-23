@@ -186,8 +186,7 @@ $(document).ready(function () {
 			"Ctrl-Space": "autocomplete",
 			"Ctrl-Q": function (cm) { cm.foldCode(cm.getCursor()); }
 		},
-		lint: true,
-		hintOptions: true
+		lint: true
 	});
 	$('#modules').on('change', function (e) {
 		ModuleChoose = e.target.value
@@ -251,6 +250,7 @@ function ___ReadyAdd() {
 	$(window).bind('beforeunload', function () {
 		return 'Bạn có muốn thoát trang ngay bây giờ?';
 	});
+	$('.body-control').addClass('active')
 }
 
 $('.dropdown-item').on('click', function (e) {
