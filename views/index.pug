@@ -2,21 +2,57 @@ extends layout
 
 block content
 	section.hero.is-primary
-		.container
+		.container-fluid
 			.hero-body
-				.container
-					h1.title= title
-					h2.subtitle
-						| Primary subtitle
-	.container
+				.columns
+					.column.is-three-quarters
+						h1.title= title
+						h2.subtitle
+							| integrate into Canh Cam App 
+					.column
+						.is-pulled-right.columns
+							.column
+								button#indent.button.is-light Indent
+							.column
+								.select.is-pulled-right
+									select#modules
+										option(selected, disabled) Chọn Module
+										option(value="Banner") Banner
+										option(value="News") News
+	.container-fluid#maincode
 		.columns
-			.column.is-two-thirds 
-				.hero-body
-					pre 
-						code.syntax-highight.xml
-					textarea#main(class="textarea is-primary" placeholder="10 lines of textarea" rows="10")
+			.column.is-three-quarters
+				.body
+					textarea#code(class="textarea is-primary" rows="20")
 			.column
-				.hero-body
-					button#indent.button.is-primary Indent
-	footer.hero.is-light
-		.content.has-text-centered.hero-body by Bao Nguyen
+				.body-control
+					.field
+						h3.title.is-4 Thêm Elements
+					.field
+						select#elms.select-on
+					.field
+						h3.title.is-4 Thêm Attribute
+					.field
+						select#attrs.select-on
+					.field
+						h3.title.is-4 Thêm XML
+					.cnt 
+						.dropdown
+							button.button.is-primary(aria-controls='dropdown-menu-1')
+								span xsl:if test="Title != ''
+								span.icon.is-small
+									i.fas.fa-angle-down
+						#dropdown-menu-1.dropdown-menu
+							.dropdown-content
+								.dropdown-item(data='<xsl:if test="Title != \'\' ">\n<xsl:value-of select="Title"></xsl:value-of>\n</xsl:if>')
+					.field
+						h3.title.is-4 Thêm giá trị
+					.cnt 
+						.dropdown
+							button.button.is-primary(aria-controls='dropdown-menu-2')
+								span Description
+								span.icon.is-small
+									i.fas.fa-angle-down
+						#dropdown-menu-2.dropdown-menu
+							.dropdown-content
+								.dropdown-item(data='<xsl:value-of select="Description" disable-output-escaping="yes"></xsl:value-of>')
