@@ -1,20 +1,27 @@
 var editor;
 var ModuleChoose = ''
 var App = {
+	note: '\nCác bước tạo file XSLT\n=====================\n\n1) Chọn Modules\n2) Thêm/bớt các attribute hoặc elements\n\nPhím tắt\n=====================\nCommand + Left: Di chuyển tới đầu dòng code\nCommand + Ctrl + Up: Di chuyển dòng code lên trên\nCommand + D: Chọn cùng giá trị',
 	xslt_top: '<?xml version="1.0" encoding="utf-8"?>\n<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:msxsl="urn:schemas-microsoft-com:xslt" exclude-result-prefixes="msxsl">\n<xsl:output method="html" indent="yes"/>\n\n',
 	xslt_bottom: '</xsl:stylesheet>',
-	xslt_module_top: '<!--Begin XXX-->\n<xsl:template match="/">',
-	xslt_module_middle: '\n<!--Call XXX Child-->\n<xsl:apply-templates select="/XXXList/XXX"></xsl:apply-templates>',
-	xslt_module_bottom: '</xsl:template>\n',
+	xslt_module_top: '<!--Begin XXX-->\n<xsl:template match="/">\n',
+	xslt_module_top_section: '<section class="canhcam-YYY-1">\n<article class="list-items">\n',
+	xslt_module_middle: '<!--Call XXX Child-->\n<xsl:apply-templates select="/XXXList/XXX"></xsl:apply-templates>',
+	xslt_module_bottom: '\n</xsl:template>\n\n',
+	xslt_module_bottom_section: '</article>\n</section>\n',
 	xslt_module_top_child: '<!--Begin XXX Child-->\n<xsl:template match="XXX">\n',
+	xslt_module_child_middle: '<!--item-->\n<div class="item">\n<xsl:attribute name="bg-img">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<!--image-->\n<img>\n<xsl:attribute name="src">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="alt">\n<xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="title">\n<xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n</img>\n<!--link-->\n<xsl:if test="Url != \'\'">\n<a>\n<xsl:attribute name="href">\n<xsl:value-of select="Url"></xsl:value-of>\n</xsl:attribute>\n<xsl:value-of select="/XXXList/ViewMore"></xsl:value-of>\n</a>\n</xsl:if>\n</div>\n',
 	xslt_module_bottom_child: '</xsl:template>\n\n',
-	xslt_attr_top: '<!--Attribute XXX-->\n<xsl:attribute name="XXX">',
-	xslt_attr_bottom: '</xsl:attribute>',
+	xslt_attr_top: '<!--Attribute XXX-->\n<xsl:attribute name="XXX">\n',
+	xslt_attr_bottom: '\n</xsl:attribute>',
 	xslt_alt: '<xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of>',
 	xslt_title: '<xsl:value-of select="Title"></xsl:value-of>',
 	xslt_target: '<xsl:value-of select="Target"></xsl:value-of>',
 	xslt_url: '<xsl:value-of select="Url"></xsl:value-of>',
-	xslt_src: '<xsl:value-of select="ImageUrl"></xsl:value-of>'
+	xslt_src: '<xsl:value-of select="ImageUrl"></xsl:value-of>',
+	xslt_id: '<xsl:text>#item-</xsl:text>\n<xsl:value-of select="position()"></xsl:value-of>',
+	xslt_class: '<xsl:text>classname</xsl:text>',
+	xslt_class_active: '<xsl:text>classname active</xsl:text>'
 }
 var substringMatcher = function (strs) {
 	return function findMatches(q, cb) {
@@ -30,14 +37,24 @@ var substringMatcher = function (strs) {
 };
 var elements = [
 	'img',
+	'a',
+	'div',
+	'p',
+	'section',
+	'article',
+	'ul',
+	'li',
 	'hr'
 ];
 var attributes = [
 	'alt',
-	'target',
-	'href',
+	'src',
 	'title',
-	'src'
+	'class',
+	'class-active',
+	'href',
+	'target',
+	'id'
 ];
 var addnew = [
 ];
@@ -45,28 +62,37 @@ var addnew = [
 function __buildModule(e) {
 	var before_prefix = ''
 	var after_prefix = ''
-	if (e.toLowerCase() === 'banner') {
-		before_prefix = '\n<xsl:if test="count(/BannerList/Banner) > 0">'
-		after_prefix = '\n</xsl:if>\n'
-	}
-	var cm = App.xslt_top + App.xslt_module_top + before_prefix + App.xslt_module_middle + after_prefix + App.xslt_module_bottom + App.xslt_module_top_child + App.xslt_module_bottom_child + App.xslt_bottom;
-	editor.setValue(cm.replace(/XXX/g, e));
+	// if (e.toLowerCase() === 'banner' || e.toLowerCase() === 'zone') {
+		before_prefix = '<xsl:if test="count(/' + e + 'List/' + e + ') > 0">\n' + App.xslt_module_top_section
+		after_prefix = '\n' + App.xslt_module_bottom_section + '</xsl:if>' 
+	// }
+	var cm = App.xslt_top + App.xslt_module_top + before_prefix + App.xslt_module_middle + after_prefix + App.xslt_module_bottom + App.xslt_module_top_child + App.xslt_module_child_middle + App.xslt_module_bottom_child + App.xslt_bottom;
+	var rep = new RegExp('XXX', 'g');
+	var repY = new RegExp('YYY', 'g');
+	editor.setValue(cm.replace(rep, e).replace(repY, e.toLowerCase()));
 	editor.refresh();
 	inDents() 
 }
-function __insertTemplateNewValue(e, m) {
+function __insertTemplateNewValue(e, m, n) {
 	var cm = ''
-	cm = '<!--Value of '+m+'-->\n' + e
-	insertText(cm.replace(/XXX/g, ModuleChoose) + '\n')
+	var rep = new RegExp('XXX', 'g');
+	if (n === '') {
+		cm = '<!--Value of '+m+'-->\n' + e
+	} else {
+		cm = '<!--' + n.replace(rep, ModuleChoose) +'-->\n' + e
+	}
+	insertText(cm.replace(rep, ModuleChoose) + '\n')
 }
 function __insertTemplateElms(e) {
 	var cm = ''
+	var rep = new RegExp('XXX', 'g');
 	cm = '<!--Elements XXX-->\n<' + e + '></' + e + '>'
-	insertText(cm.replace(/XXX/g, e))
+	insertText(cm.replace(rep, e))
 }
 
 function __insertTemplateAttr(e) {
 	var cm = ''
+	var rep = new RegExp('XXX', 'g');
 	if (e === 'alt') {
 		cm = App.xslt_attr_top + App.xslt_alt + App.xslt_attr_bottom
 	} else if (e === 'src') {
@@ -77,8 +103,15 @@ function __insertTemplateAttr(e) {
 		cm = App.xslt_attr_top + App.xslt_url + App.xslt_attr_bottom
 	} else if (e === 'title') {
 		cm = App.xslt_attr_top + App.xslt_title + App.xslt_attr_bottom
+	} else if (e === 'class') {
+		cm = App.xslt_attr_top + App.xslt_class + App.xslt_attr_bottom
+	} else if (e === 'id') {
+		cm = App.xslt_attr_top + App.xslt_id + App.xslt_attr_bottom
+	} else if (e === 'class-active') {
+		cm = '<xsl:if test="IsActive=\'true\'">\n' + App.xslt_attr_top + App.xslt_class_active + App.xslt_attr_bottom +'\n</xsl:if>'
+		e = 'class'
 	}
-	insertText(cm.replace(/XXX/g, e) + '\n')
+	insertText(cm.replace(rep, e) + '\n')
 }
 
 function escapeHtml(unsafe) {
@@ -127,8 +160,9 @@ function completeIfInTag(cm) {
 }
 
 $(document).ready(function () {
+	$('#code').html(App.note)
 	editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-		mode: "xml",
+		mode: "text/x-markdown",
 		lineNumbers: true,
 		keyMap: "sublime",
 		autoCloseBrackets: true,
@@ -140,6 +174,7 @@ $(document).ready(function () {
 		indentUnit: 4,
 		smartIndent: true,
 		indentWithTabs: true,
+		styleActiveLine: true,
 		foldGutter: true,
 		gutters: ["CodeMirror-lint-markers", "CodeMirror-linenumbers", "CodeMirror-foldgutter"],
 		extraKeys: {
@@ -151,10 +186,13 @@ $(document).ready(function () {
 			"Ctrl-Space": "autocomplete",
 			"Ctrl-Q": function (cm) { cm.foldCode(cm.getCursor()); }
 		},
-		lint: true
+		lint: true,
+		hintOptions: true
 	});
 	$('#modules').on('change', function (e) {
 		ModuleChoose = e.target.value
+		editor.setOption("mode", 'xml');
+		changeX(e.target.value)
 		__buildModule(e.target.value)
 		___ReadyAdd()
 	});
@@ -199,7 +237,7 @@ $(document).ready(function () {
 	});
 	$('.dropdown').click(function(){
 		var od = $(this).parents('.cnt')
-		var data = escapeHtml($(od).find('.dropdown-item').attr('data'))
+		var data = escapeHtml($(od).find('.dropdown-item').attr('data-set'))
 		$(od).find('.dropdown-item').html(data)
 		$(od).find('.dropdown-menu').toggleClass('active')
 	})
@@ -216,9 +254,10 @@ function ___ReadyAdd() {
 }
 
 $('.dropdown-item').on('click', function (e) {
-	var getval = $(this).attr('data')
+	var getval = $(this).attr('data-set')
+	var getcomment = $(this).attr('data-comment')
 	var m = $(this).parents('.cnt').find('.val').text()
-	__insertTemplateNewValue(getval, m)
+	__insertTemplateNewValue(getval, m, getcomment)
 })
 
 $('#indent').on('click', function (e) {
@@ -226,6 +265,21 @@ $('#indent').on('click', function (e) {
 	inDents() 
 })
 
+function changeX(u) {
+	$('.dropdown-item').each(function () {
+		var old = $(this).attr('old-data-set')
+		var elm = $(this).attr('data-set')
+		var rep = new RegExp('XXX', 'g');
+		var re = new RegExp(old, 'g');
+		if (old === '') {
+			$(this).attr('old-data-set', u)
+			$(this).attr('data-set', elm.replace(rep, u))
+		} else {
+			$(this).attr('old-data-set', u)
+			$(this).attr('data-set', elm.replace(re, u))
+		}
+	})
+}
 function inDents() {
 	var cm = $(".CodeMirror")[0].CodeMirror;
 	var doc = cm.getDoc();
