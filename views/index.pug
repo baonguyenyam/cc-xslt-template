@@ -38,21 +38,91 @@ block content
 						h3.title.is-4 Thêm XML
 					.cnt 
 						.dropdown
-							button.button.is-primary(aria-controls='dropdown-menu-1')
-								span xsl:if test="Title != ''
+							button.button.is-primary
+								span.val xsl:if test="Title != ''
 								span.icon.is-small
 									i.fas.fa-angle-down
-						#dropdown-menu-1.dropdown-menu
+						.dropdown-menu
 							.dropdown-content
 								.dropdown-item(data='<xsl:if test="Title != \'\' ">\n<xsl:value-of select="Title"></xsl:value-of>\n</xsl:if>')
 					.field
 						h3.title.is-4 Thêm giá trị
 					.cnt 
 						.dropdown
-							button.button.is-primary(aria-controls='dropdown-menu-2')
-								span Description
+							button.button.is-primary
+								span.val Module Title
 								span.icon.is-small
 									i.fas.fa-angle-down
-						#dropdown-menu-2.dropdown-menu
+						.dropdown-menu
+							.dropdown-content
+								.dropdown-item(data='<xsl:value-of select="/XXXList/ModuleTitle"></xsl:value-of>')
+					.cnt 
+						.dropdown
+							button.button.is-primary
+								span.val Title
+								span.icon.is-small
+									i.fas.fa-angle-down
+						.dropdown-menu
+							.dropdown-content
+								.dropdown-item(data='<xsl:value-of select="Title"></xsl:value-of>')
+					.cnt 
+						.dropdown
+							button.button.is-primary
+								span.val EditLink
+								span.icon.is-small
+									i.fas.fa-angle-down
+						.dropdown-menu
+							.dropdown-content
+								.dropdown-item(data='<xsl:value-of select="EditLink" disable-output-escaping="yes"></xsl:value-of>')
+					.cnt 
+						.dropdown
+							button.button.is-primary
+								span.val BriefContent
+								span.icon.is-small
+									i.fas.fa-angle-down
+						.dropdown-menu
+							.dropdown-content
+								.dropdown-item(data='<xsl:value-of select="BriefContent" disable-output-escaping="yes"></xsl:value-of>')
+					.cnt 
+						.dropdown
+							button.button.is-primary
+								span.val Description
+								span.icon.is-small
+									i.fas.fa-angle-down
+						.dropdown-menu
 							.dropdown-content
 								.dropdown-item(data='<xsl:value-of select="Description" disable-output-escaping="yes"></xsl:value-of>')
+					.cnt 
+						.dropdown
+							button.button.is-primary
+								span.val FullContent
+								span.icon.is-small
+									i.fas.fa-angle-down
+						.dropdown-menu
+							.dropdown-content
+								.dropdown-item(data='<xsl:value-of select="FullContent" disable-output-escaping="yes"></xsl:value-of>')
+					.cnt 
+						.dropdown
+							button.button.is-primary
+								span.val Image
+								span.icon.is-small
+									i.fas.fa-angle-down
+						.dropdown-menu
+							.dropdown-content
+								.dropdown-item(data='<xsl:value-of select="ImageUrl" disable-output-escaping="yes"></xsl:value-of>')
+					.cnt 
+						.dropdown
+							button.button.is-primary
+								span.val CreatedDate
+								span.icon.is-small
+									i.fas.fa-angle-down
+						.dropdown-menu
+							.dropdown-content
+								.dropdown-item(data='<xsl:value-of select="CreatedDate"></xsl:value-of>')
+				
+					.field
+						h3.title.is-4 Phím tắt 
+					.field
+						p Command + Left: Di chuyển tới đầu dòng code
+						p Command + Ctrl + Up: Di chuyển dòng code lên trên
+						p Command + D: Chọn cùng giá trị

@@ -1,4 +1,5 @@
 var editor;
+var ModuleChoose = ''
 var App = {
 	xslt_top: '<?xml version="1.0" encoding="utf-8"?>\n<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:msxsl="urn:schemas-microsoft-com:xslt" exclude-result-prefixes="msxsl">\n<xsl:output method="html" indent="yes"/>\n\n',
 	xslt_bottom: '</xsl:stylesheet>',
@@ -7,7 +8,7 @@ var App = {
 	xslt_module_bottom: '</xsl:template>\n',
 	xslt_module_top_child: '<!--Begin XXX Child-->\n<xsl:template match="XXX">\n',
 	xslt_module_bottom_child: '</xsl:template>\n\n',
-	xslt_attr_top: '<!--Attribute YYY-->\n<xsl:attribute name="YYY">',
+	xslt_attr_top: '<!--Attribute XXX-->\n<xsl:attribute name="XXX">',
 	xslt_attr_bottom: '</xsl:attribute>',
 	xslt_alt: '<xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of>',
 	xslt_title: '<xsl:value-of select="Title"></xsl:value-of>',
@@ -53,15 +54,15 @@ function __buildModule(e) {
 	editor.refresh();
 	inDents() 
 }
-function __insertTemplateNewValue(e) {
+function __insertTemplateNewValue(e, m) {
 	var cm = ''
-	cm = '<!--Elements YYY-->\n' + e.split(';')[1]
-	insertText(cm.replace(/YYY/g, e.split(';')[0]) + '\n')
+	cm = '<!--Value of '+m+'-->\n' + e
+	insertText(cm.replace(/XXX/g, ModuleChoose) + '\n')
 }
 function __insertTemplateElms(e) {
 	var cm = ''
-	cm = '<!--Elements YYY-->\n<' + e + '>\n</' + e + '>'
-	insertText(cm.replace(/YYY/g, e))
+	cm = '<!--Elements XXX-->\n<' + e + '></' + e + '>'
+	insertText(cm.replace(/XXX/g, e))
 }
 
 function __insertTemplateAttr(e) {
@@ -77,7 +78,7 @@ function __insertTemplateAttr(e) {
 	} else if (e === 'title') {
 		cm = App.xslt_attr_top + App.xslt_title + App.xslt_attr_bottom
 	}
-	insertText(cm.replace(/YYY/g, e) + '\n')
+	insertText(cm.replace(/XXX/g, e) + '\n')
 }
 
 function escapeHtml(unsafe) {
@@ -153,6 +154,7 @@ $(document).ready(function () {
 		lint: true
 	});
 	$('#modules').on('change', function (e) {
+		ModuleChoose = e.target.value
 		__buildModule(e.target.value)
 		___ReadyAdd()
 	});
@@ -196,10 +198,10 @@ $(document).ready(function () {
 		__insertTemplateElms(e.target.value)
 	});
 	$('.dropdown').click(function(){
-		var od = $(this).find('button').attr('aria-controls')
-		var data = escapeHtml($('#' + od).find('.dropdown-item').attr('data'))
-		$('#' + od).find('.dropdown-item').html(data)
-		$('#'+od).toggleClass('active')
+		var od = $(this).parents('.cnt')
+		var data = escapeHtml($(od).find('.dropdown-item').attr('data'))
+		$(od).find('.dropdown-item').html(data)
+		$(od).find('.dropdown-menu').toggleClass('active')
 	})
 	$('.dropdown-item').click(function(){
 		$(this).parents('.dropdown-menu').toggleClass('active')
@@ -208,11 +210,15 @@ $(document).ready(function () {
 
 function ___ReadyAdd() {
 	$('.d-none').removeClass('d-none')
+	$(window).bind('beforeunload', function () {
+		return 'Bạn có muốn thoát trang ngay bây giờ?';
+	});
 }
 
-$('#add').on('click', function (e) {
-	var getval = $('.tt-input').val()
-	__insertTemplateNewValue(getval)
+$('.dropdown-item').on('click', function (e) {
+	var getval = $(this).attr('data')
+	var m = $(this).parents('.cnt').find('.val').text()
+	__insertTemplateNewValue(getval, m)
 })
 
 $('#indent').on('click', function (e) {
