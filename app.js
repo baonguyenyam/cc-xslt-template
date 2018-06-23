@@ -6,6 +6,8 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var app = express();
+var pug = require('pug');
+var fs = require('fs');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -34,5 +36,42 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+function makeid(e) {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  for (var i = 0; i < e; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  return text;
+}
+function PugCom(a, b) {
+  var outFileStream, parseFiles, writeToOutput;
+  parseFiles = function (dirname) {
+    var compiled, file, fileContents, filenames, i, pathv, len, results, stats;
+    file = path.join(dirname)
+    results = [];
+    fileContents = fs.readFileSync(file, 'utf8');
+    compiled = pug.compile(fileContents, {
+      client: true,
+      compileDebug: false,
+      filename: file
+    });
+    writeToOutput(compiled, file.replace('.pug', ''))
+
+    return results;
+  };
+
+  writeToOutput = function (fn, fnName) {
+    var fnString;
+    var id = makeid(10)
+    fnString = fn.toString().replace('function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_html = pug_html +', "var " + id + " = ").replace('return pug_html;}', 'document.write(' + id + ');;')
+    return outFileStream.write(fnString);
+  };
+  outFileStream = fs.createWriteStream(b, {
+    flags: 'w'
+  });
+  parseFiles(a, b);
+}
+PugCom('./views/__index.pug', './views/__index.js')
 
 module.exports = app;

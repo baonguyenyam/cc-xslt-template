@@ -1,0 +1,223 @@
+section.hero.is-primary
+	.container-fluid
+		.hero-body
+			.columns
+				.column.is-three-quarters
+					h1.title XSLT Builder by Bao Nguyen
+					h2.subtitle
+						| integrate into Canh Cam App 
+				.column
+					.is-pulled-right.columns
+						.column
+							button#indent.button.is-light Indent
+						.column
+							.select.is-pulled-right
+								select#modules
+									option(selected, disabled) Chọn Module
+									option(value="Banner") Banner
+									option(value="Gallery") Gallery
+									option(value="Video") Video
+									option(value="News") News
+									option(value="Zone") Zone
+.container-fluid#maincode
+	.columns
+		.column.is-three-quarters
+			.body
+				textarea#code(class="textarea is-primary" rows="20")
+		.column
+			.body-control
+				.field
+					h3.title.is-4 Thêm Elements
+				.field
+					select#elms.select-on
+						option
+				.field
+					h3.title.is-4 Thêm Attribute
+				.field
+					select#attrs.select-on
+						option
+				.field
+					h3.title.is-4 Thêm Layout
+				.cnt 
+					.dropdown
+						button.button.is-primary
+							span.val Main Template
+							span.icon.is-small
+								i.fas.fa-angle-down
+					.dropdown-menu
+						.dropdown-content
+							.dropdown-item(old-data-set, data-set='<xsl:template match="/">\n</xsl:template>', data-comment="Begin XXX")
+				.cnt 
+					.dropdown
+						button.button.is-primary
+							span.val Item Child Template
+							span.icon.is-small
+								i.fas.fa-angle-down
+					.dropdown-menu
+						.dropdown-content
+							.dropdown-item(old-data-set, data-set='<xsl:apply-templates select="/XXXList/XXX"></xsl:apply-templates>', data-comment="Call XXX Child")
+				.field
+					h3.title.is-4 Thêm XML
+				.cnt 
+					.dropdown
+						button.button.is-primary
+							span.val xsl:text
+							span.icon.is-small
+								i.fas.fa-angle-down
+					.dropdown-menu
+						.dropdown-content
+							.dropdown-item(old-data-set, data-set='<xsl:text disable-output-escaping="yes">&lt;div&gt;</xsl:text>', data-comment="Title is Null")
+				.cnt 
+					.dropdown
+						button.button.is-primary
+							span.val xsl:if test="Title != ''
+							span.icon.is-small
+								i.fas.fa-angle-down
+					.dropdown-menu
+						.dropdown-content
+							.dropdown-item(old-data-set, data-set='<xsl:if test="Title != \'\' ">\n<xsl:value-of select="Title"></xsl:value-of>\n</xsl:if>', data-comment="Title is Null")
+				.cnt 
+					.dropdown
+						button.button.is-primary
+							span.val xsl:if count > 0
+							span.icon.is-small
+								i.fas.fa-angle-down
+					.dropdown-menu
+						.dropdown-content
+							.dropdown-item(old-data-set, data-set='<xsl:if test="count(/XXXList/XXX) > 0">\n</xsl:if>', data-comment="Count > 0")
+				.cnt 
+					.dropdown
+						button.button.is-primary
+							span.val xsl:if IsActive = true
+							span.icon.is-small
+								i.fas.fa-angle-down
+					.dropdown-menu
+						.dropdown-content
+							.dropdown-item(old-data-set, data-set='<xsl:if test="IsActive=\'true\'">\n</xsl:if>', data-comment="Active = 'true'")
+				.cnt 
+					.dropdown
+						button.button.is-primary
+							span.val xsl:if position() = 1
+							span.icon.is-small
+								i.fas.fa-angle-down
+					.dropdown-menu
+						.dropdown-content
+							.dropdown-item(old-data-set, data-set='<xsl:if test="position() = 1 ">\n</xsl:if>', data-comment="Position = 1 OR != 1")
+				.cnt 
+					.dropdown
+						button.button.is-primary
+							span.val xsl:if position() = last()
+							span.icon.is-small
+								i.fas.fa-angle-down
+					.dropdown-menu
+						.dropdown-content
+							.dropdown-item(old-data-set, data-set='<xsl:if test="position() = last() ">\n</xsl:if>', data-comment="Position is last() OR first()")
+				
+				.field
+					h3.title.is-4 Thêm giá trị
+				.cnt 
+					.dropdown
+						button.button.is-primary
+							span.val Module Title
+							span.icon.is-small
+								i.fas.fa-angle-down
+					.dropdown-menu
+						.dropdown-content
+							.dropdown-item(old-data-set, data-set='<xsl:value-of select="/XXXList/ModuleTitle"></xsl:value-of>', data-comment)
+				.cnt 
+					.dropdown
+						button.button.is-primary
+							span.val Title
+							span.icon.is-small
+								i.fas.fa-angle-down
+					.dropdown-menu
+						.dropdown-content
+							.dropdown-item(old-data-set, data-set='<xsl:value-of select="Title"></xsl:value-of>', data-comment)
+				.cnt 
+					.dropdown
+						button.button.is-primary
+							span.val EditLink
+							span.icon.is-small
+								i.fas.fa-angle-down
+					.dropdown-menu
+						.dropdown-content
+							.dropdown-item(old-data-set, data-set='<xsl:value-of select="EditLink" disable-output-escaping="yes"></xsl:value-of>', data-comment)
+				.cnt 
+					.dropdown
+						button.button.is-primary
+							span.val ViewMore
+							span.icon.is-small
+								i.fas.fa-angle-down
+					.dropdown-menu
+						.dropdown-content
+							.dropdown-item(old-data-set, data-set='<xsl:value-of select="/XXXList/ViewMore"></xsl:value-of>', data-comment)
+				.cnt 
+					.dropdown
+						button.button.is-primary
+							span.val BriefContent
+							span.icon.is-small
+								i.fas.fa-angle-down
+					.dropdown-menu
+						.dropdown-content
+							.dropdown-item(old-data-set, data-set='<xsl:value-of select="BriefContent" disable-output-escaping="yes"></xsl:value-of>', data-comment)
+				.cnt 
+					.dropdown
+						button.button.is-primary
+							span.val Description
+							span.icon.is-small
+								i.fas.fa-angle-down
+					.dropdown-menu
+						.dropdown-content
+							.dropdown-item(old-data-set, data-set='<xsl:value-of select="Description" disable-output-escaping="yes"></xsl:value-of>', data-comment)
+				.cnt 
+					.dropdown
+						button.button.is-primary
+							span.val FullContent
+							span.icon.is-small
+								i.fas.fa-angle-down
+					.dropdown-menu
+						.dropdown-content
+							.dropdown-item(old-data-set, data-set='<xsl:value-of select="FullContent" disable-output-escaping="yes"></xsl:value-of>', data-comment)
+				.cnt 
+					.dropdown
+						button.button.is-primary
+							span.val Video
+							span.icon.is-small
+								i.fas.fa-angle-down
+					.dropdown-menu
+						.dropdown-content
+							.dropdown-item(old-data-set, data-set='<xsl:value-of select="VideoUrl" disable-output-escaping="yes"></xsl:value-of>', data-comment)
+				.cnt 
+					.dropdown
+						button.button.is-primary
+							span.val Image
+							span.icon.is-small
+								i.fas.fa-angle-down
+					.dropdown-menu
+						.dropdown-content
+							.dropdown-item(old-data-set, data-set='<xsl:value-of select="ImageUrl" disable-output-escaping="yes"></xsl:value-of>', data-comment)
+				.cnt 
+					.dropdown
+						button.button.is-primary
+							span.val Images Album
+							span.icon.is-small
+								i.fas.fa-angle-down
+					.dropdown-menu
+						.dropdown-content
+							.dropdown-item(old-data-set, data-set='<xsl:apply-templates select="Image" mode="ImageByAlbum"></xsl:apply-templates>', data-comment)
+				.cnt 
+					.dropdown
+						button.button.is-primary
+							span.val CreatedDate
+							span.icon.is-small
+								i.fas.fa-angle-down
+					.dropdown-menu
+						.dropdown-content
+							.dropdown-item(old-data-set, data-set='<xsl:value-of select="CreatedDate"></xsl:value-of>', data-comment)
+			
+				.field
+					h3.title.is-4 Phím tắt 
+				.field
+					p Command + Left: Di chuyển tới đầu dòng code
+					p Command + Ctrl + Up: Di chuyển dòng code lên trên
+					p Command + D: Chọn cùng giá trị
