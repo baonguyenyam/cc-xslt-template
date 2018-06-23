@@ -1,5 +1,22 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+	section.hero.is-primary
+		.container
+			.hero-body
+				.container
+					h1.title= title
+					h2.subtitle
+						| Primary subtitle
+	.container
+		.columns
+			.column.is-two-thirds 
+				.hero-body
+					pre 
+						code.syntax-highight.xml
+					textarea#main(class="textarea is-primary" placeholder="10 lines of textarea" rows="10")
+			.column
+				.hero-body
+					button#indent.button.is-primary Indent
+	footer.hero.is-light
+		.content.has-text-centered.hero-body by Bao Nguyen
