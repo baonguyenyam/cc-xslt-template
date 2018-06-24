@@ -13,8 +13,10 @@ var App = {
 	xslt_module_bottom_article: '</article>\n',
 	xslt_module_top_child: '<!--Begin XXX Child-->\n<xsl:template match="XXX">\n',
 	xslt_module_child_middle: '<!--item-->\n<div class="item">\n<xsl:attribute name="bg-img">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<!--image-->\n<img>\n<xsl:attribute name="src">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="alt">\n<xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="title">\n<xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n</img>\n<!--link-->\n<xsl:if test="Url != \'\'">\n<a>\n<xsl:attribute name="href">\n<xsl:value-of select="Url"></xsl:value-of>\n</xsl:attribute>\n<xsl:value-of select="/XXXList/ViewMore"></xsl:value-of>\n</a>\n</xsl:if>\n</div>\n',
-	xslt_module_child_gallery_middle: '<!--item-->\n<div class="item">\n<!--album target-->\n<xsl:attribute name="data-target">\n<xsl:text>#YYY-</xsl:text>\n<xsl:value-of select="position()"></xsl:value-of>\n</xsl:attribute>\n<a class="thumb">\n<xsl:attribute name="href">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<figure>\n<xsl:attribute name="bg-img">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<!--image-->\n<img>\n<xsl:attribute name="src">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="alt">\n<xsl:value-of select="Image/Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="title">\n<xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n</img>\n<!--title-->\n<figcaption>\n<h2><xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of></h2>\n</figcaption>\n</figure>\n</a>\n<!--album list-->\n<div class="d-none imagesinalbum">\n<!--album id-->\n<xsl:attribute name="id">\n<xsl:text>YYY-</xsl:text>\n<xsl:value-of select="position()"></xsl:value-of>\n</xsl:attribute>\n<xsl:apply-templates select="Images" mode="ImageByAlbum"></xsl:apply-templates>\n</div>\n</div>\n',
-	xslt_module_child_video_middle: '<!--item-->\n<div class="item">\n<!--album target-->\n<xsl:attribute name="id">\n<xsl:text>YYY-</xsl:text>\n<xsl:value-of select="position()"></xsl:value-of>\n</xsl:attribute>\n<a class="thumb">\n<xsl:attribute name="href">\n<xsl:value-of select="VideoUrl"></xsl:value-of>\n</xsl:attribute>\n<figure>\n<xsl:attribute name="bg-img">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<!--image-->\n<img>\n<xsl:attribute name="src">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="alt">\n<xsl:value-of select="Image/Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="title">\n<xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n</img>\n<!--title-->\n<figcaption>\n<h2><xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of></h2>\n</figcaption>\n</figure>\n</a>\n</div>\n',
+	xslt_module_child_news_advanced_middle: '<!--item-->\n<div class="item">\n<!--album target-->\n<xsl:attribute name="id">\n<xsl:text>news-</xsl:text>\n<xsl:value-of select="position()"></xsl:value-of>\n</xsl:attribute>\n<figure>\n<xsl:attribute name="bg-img">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<!--image-->\n<a class="thumb">\n<xsl:attribute name="href">\n<xsl:value-of select="Url"></xsl:value-of>\n</xsl:attribute>\n<img>\n<xsl:attribute name="src">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="alt">\n<xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="title">\n<xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n</img>\n</a>\n<!--title-->\n<figcaption>\n<a class="titlelink">\n<xsl:attribute name="href">\n<xsl:value-of select="Url"></xsl:value-of>\n</xsl:attribute>\n<h2><xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of></h2>\n</a>\n<time><em class="fa fa-calendar"></em><xsl:value-of select="CreatedDate"></xsl:value-of></time>\n<p>\n<xsl:value-of select="BriefContent" disable-output-escaping="yes"></xsl:value-of>\n</p>\n</figcaption>\n</figure>\n</div>\n<xsl:value-of select="EditLink" disable-output-escaping="yes"></xsl:value-of>\n',
+	xslt_module_child_news_middle: '<!--item-->\n<div class="item">\n<!--album target-->\n<xsl:attribute name="id">\n<xsl:text>news-</xsl:text>\n<xsl:value-of select="position()"></xsl:value-of>\n</xsl:attribute>\n<figure>\n<xsl:attribute name="bg-img">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<!--image-->\n<a class="thumb">\n<xsl:attribute name="href">\n<xsl:value-of select="Url"></xsl:value-of>\n</xsl:attribute>\n<img>\n<xsl:attribute name="src">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="alt">\n<xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="title">\n<xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n</img>\n</a>\n<!--title-->\n<figcaption>\n<a class="titlelink">\n<xsl:attribute name="href">\n<xsl:value-of select="Url"></xsl:value-of>\n</xsl:attribute>\n<h2><xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of></h2>\n</a>\n<time><xsl:value-of select="CreatedDate"></xsl:value-of></time>\n<p>\n<xsl:value-of select="BriefContent" disable-output-escaping="yes"></xsl:value-of>\n</p>\n</figcaption>\n</figure>\n</div>\n<xsl:value-of select="EditLink" disable-output-escaping="yes"></xsl:value-of>\n',
+	xslt_module_child_gallery_middle: '<!--item-->\n<div class="item">\n<!--album target-->\n<xsl:attribute name="data-target">\n<xsl:text>#YYY-</xsl:text>\n<xsl:value-of select="position()"></xsl:value-of>\n</xsl:attribute>\n<a class="thumb">\n<xsl:attribute name="href">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<figure>\n<xsl:attribute name="bg-img">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<!--image-->\n<img>\n<xsl:attribute name="src">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="alt">\n<xsl:value-of select="Image/Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="title">\n<xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n</img>\n<!--title-->\n<figcaption>\n<h2><xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of></h2>\n</figcaption>\n</figure>\n</a>\n<!--album list-->\n<div class="d-none imagesinalbum">\n<!--album id-->\n<xsl:attribute name="id">\n<xsl:text>YYY-</xsl:text>\n<xsl:value-of select="position()"></xsl:value-of>\n</xsl:attribute>\n<xsl:apply-templates select="Images" mode="ImageByAlbum"></xsl:apply-templates>\n</div>\n</div>\n<xsl:value-of select="EditLink" disable-output-escaping="yes"></xsl:value-of>\n',
+	xslt_module_child_video_middle: '<!--item-->\n<div class="item">\n<!--album target-->\n<xsl:attribute name="id">\n<xsl:text>YYY-</xsl:text>\n<xsl:value-of select="position()"></xsl:value-of>\n</xsl:attribute>\n<a class="thumb">\n<xsl:attribute name="href">\n<xsl:value-of select="VideoUrl"></xsl:value-of>\n</xsl:attribute>\n<figure>\n<xsl:attribute name="bg-img">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<!--image-->\n<img>\n<xsl:attribute name="src">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="alt">\n<xsl:value-of select="Image/Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="title">\n<xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n</img>\n<!--title-->\n<figcaption>\n<h2><xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of></h2>\n</figcaption>\n</figure>\n</a>\n</div>\n<xsl:value-of select="EditLink" disable-output-escaping="yes"></xsl:value-of>\n',
 	xslt_module_bottom_child: '</xsl:template>\n\n',
 	xslt_attr_top: '<!--Attribute XXX-->\n<xsl:attribute name="XXX">\n',
 	xslt_attr_bottom: '\n</xsl:attribute>',
@@ -81,24 +83,36 @@ function __buildModule(e) {
 		App.xslt_module_child_middle = App.xslt_module_child_video_middle
 		before_prefix_all = App.xslt_module_top_section + before_prefix + '<xsl:if test="count(/' + e + 'List/' + e + ') > 0">\n' + App.xslt_module_top_article 
 		after_prefix_all = '\n' + App.xslt_module_bottom_article + '</xsl:if>' + '\n' + App.xslt_module_bottom_section 
+	} else if (e.toLowerCase() === 'news') {
+		before_prefix = '<!--Title-->\n<caption>\n<h1 class="title">\n<xsl:value-of select="/XXXList/ZoneTitle"></xsl:value-of>\n</h1>\n<p class="lead">\n<xsl:value-of select="BriefContent" disable-output-escaping="yes"></xsl:value-of>\n</p>\n</caption>\n'
+		App.xslt_module_child_middle = App.xslt_module_child_news_middle
+		before_prefix_all = App.xslt_module_top_section + before_prefix + '<xsl:if test="count(/' + e + 'List/' + e + ') > 0">\n' + App.xslt_module_top_article
+		after_prefix_all = '\n' + App.xslt_module_bottom_article + '</xsl:if>' + '\n' + App.xslt_module_bottom_section
+	} else if (e.toLowerCase() === 'news-advanced') {
+		before_prefix = '<!--Title-->\n<caption>\n<h1 class="title">\n<xsl:value-of select="/XXXList/ZoneTitle"></xsl:value-of>\n</h1>\n<p class="lead">\n<xsl:value-of select="BriefContent" disable-output-escaping="yes"></xsl:value-of>\n</p>\n</caption>\n'
+		App.xslt_module_child_middle = App.xslt_module_child_news_advanced_middle
+		before_prefix_all = App.xslt_module_top_section + before_prefix + '<xsl:if test="count(/' + e + 'List/' + e + ') > 0">\n' + App.xslt_module_top_article
+		after_prefix_all = '\n' + App.xslt_module_bottom_article + '</xsl:if>' + '\n' + App.xslt_module_bottom_section
 	}
 	// Begin build
 	var cm = App.xslt_top + App.xslt_module_top + before_prefix_all + App.xslt_module_middle + after_prefix_all + App.xslt_module_bottom + App.xslt_module_top_child + App.xslt_module_child_middle + App.xslt_module_bottom_child + after_prefix + App.xslt_bottom;
+	var repX = new RegExp('News-Advanced', 'g');
 	var rep = new RegExp('XXX', 'g');
 	var repY = new RegExp('YYY', 'g');
-	editor.setValue(cm.replace(rep, e).replace(repY, e.toLowerCase()));
+	editor.setValue(cm.replace(rep, e).replace(repY, e.toLowerCase()).replace(repX, 'News'));
 	editor.refresh();
 	inDents() 
 }
 function __insertTemplateNewValue(e, m, n) {
 	var cm = ''
 	var rep = new RegExp('XXX', 'g');
+	var repX = new RegExp('News-Advanced', 'g');
 	if (n === '') {
 		cm = '<!--Value of '+m+'-->\n' + e
 	} else {
-		cm = '<!--' + n.replace(rep, ModuleChoose) +'-->\n' + e
+		cm = '<!--' + n.replace(rep, ModuleChoose.replace(repX, 'News')) +'-->\n' + e
 	}
-	insertText(cm.replace(rep, ModuleChoose) + '\n')
+	insertText(cm.replace(rep, ModuleChoose.replace(repX, 'News')) + '\n')
 }
 function __insertTemplateElms(e) {
 	var cm = ''
@@ -206,10 +220,11 @@ $(document).ready(function () {
 		lint: true
 	});
 	$('#modules').on('change', function (e) {
+		var repX = new RegExp('News-Advanced', 'g');
 		ModuleChoose = e.target.value
 		editor.setOption("mode", 'xml');
-		changeX(e.target.value)
-		__buildModule(e.target.value)
+		changeX(ModuleChoose.replace(repX, 'News'))
+		__buildModule(ModuleChoose)
 		___ReadyAdd()
 	});
 	$('.typeahead').typeahead({
