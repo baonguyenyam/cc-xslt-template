@@ -5,12 +5,15 @@ var App = {
 	xslt_top: '<?xml version="1.0" encoding="utf-8"?>\n<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:msxsl="urn:schemas-microsoft-com:xslt" exclude-result-prefixes="msxsl">\n<xsl:output method="html" indent="yes"/>\n\n',
 	xslt_bottom: '</xsl:stylesheet>',
 	xslt_module_top: '<!--Begin XXX-->\n<xsl:template match="/">\n',
-	xslt_module_top_section: '<section class="canhcam-YYY-1">\n<article class="list-items">\n',
+	xslt_module_top_section: '<section class="canhcam-YYY-1">\n',
+	xslt_module_top_article: '<article class="list-items">\n',
 	xslt_module_middle: '<!--Call XXX Child-->\n<xsl:apply-templates select="/XXXList/XXX"></xsl:apply-templates>',
-	xslt_module_bottom: '\n</xsl:template>\n\n',
-	xslt_module_bottom_section: '</article>\n</section>\n',
+	xslt_module_bottom: '</xsl:template>\n\n',
+	xslt_module_bottom_section: '</section>\n',
+	xslt_module_bottom_article: '</article>\n',
 	xslt_module_top_child: '<!--Begin XXX Child-->\n<xsl:template match="XXX">\n',
 	xslt_module_child_middle: '<!--item-->\n<div class="item">\n<xsl:attribute name="bg-img">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<!--image-->\n<img>\n<xsl:attribute name="src">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="alt">\n<xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="title">\n<xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n</img>\n<!--link-->\n<xsl:if test="Url != \'\'">\n<a>\n<xsl:attribute name="href">\n<xsl:value-of select="Url"></xsl:value-of>\n</xsl:attribute>\n<xsl:value-of select="/XXXList/ViewMore"></xsl:value-of>\n</a>\n</xsl:if>\n</div>\n',
+	xslt_module_child_gallery_middle: '<!--item-->\n<div class="item">\n<!--album target-->\n<xsl:attribute name="data-target">\n<xsl:text>YYY-</xsl:text>\n<xsl:value-of select="position()"></xsl:value-of>\n</xsl:attribute>\n<a class="thumb">\n<xsl:attribute name="href">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<figure>\n<xsl:attribute name="bg-img">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<!--image-->\n<img>\n<xsl:attribute name="src">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="alt">\n<xsl:value-of select="Image/Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="title">\n<xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n</img>\n<!--title-->\n<figcaption>\n<h2><xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of></h2>\n</figcaption>\n</figure>\n</a>\n<!--album list-->\n<div class="d-none imagesinalbum">\n<!--album id-->\n<xsl:attribute name="id">\n<xsl:text>#YYY-</xsl:text>\n<xsl:value-of select="position()"></xsl:value-of>\n</xsl:attribute>\n<xsl:apply-templates select="Images" mode="ImageByAlbum"></xsl:apply-templates>\n</div>\n</div>\n',
 	xslt_module_bottom_child: '</xsl:template>\n\n',
 	xslt_attr_top: '<!--Attribute XXX-->\n<xsl:attribute name="XXX">\n',
 	xslt_attr_bottom: '\n</xsl:attribute>',
@@ -62,11 +65,19 @@ var addnew = [
 function __buildModule(e) {
 	var before_prefix = ''
 	var after_prefix = ''
-	// if (e.toLowerCase() === 'banner' || e.toLowerCase() === 'zone') {
-		before_prefix = '<xsl:if test="count(/' + e + 'List/' + e + ') > 0">\n' + App.xslt_module_top_section
-		after_prefix = '\n' + App.xslt_module_bottom_section + '</xsl:if>' 
-	// }
-	var cm = App.xslt_top + App.xslt_module_top + before_prefix + App.xslt_module_middle + after_prefix + App.xslt_module_bottom + App.xslt_module_top_child + App.xslt_module_child_middle + App.xslt_module_bottom_child + App.xslt_bottom;
+	var before_prefix_all = ''
+	var after_prefix_all = ''
+	before_prefix_all = '<xsl:if test="count(/' + e + 'List/' + e + ') > 0">\n' + App.xslt_module_top_section + before_prefix + App.xslt_module_top_article
+	after_prefix_all = '\n' + App.xslt_module_bottom_article + App.xslt_module_bottom_section + '</xsl:if>\n' 
+	if (e.toLowerCase() === 'gallery' || e.toLowerCase() === 'video') {
+		before_prefix = '<!--Title-->\n<caption>\n<h1 class="title">\n<xsl:value-of select="/XXXList/ModuleTitle"></xsl:value-of>\n</h1>\n<p class="lead">\n<xsl:value-of select="BriefContent" disable-output-escaping="yes"></xsl:value-of>\n</p>\n</caption>\n'
+		after_prefix = '<!--Begin Gallery Album-->\n<xsl:template match="Images" mode="ImageByAlbum">\n<xsl:if test="position() > 1">\n<a>\n<xsl:attribute name="href">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="title">\n<xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n<img>\n<xsl:attribute name="src">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="title">\n<xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n</img>\n</a>\n</xsl:if>\n</xsl:template>\n\n'
+		App.xslt_module_child_middle = App.xslt_module_child_gallery_middle
+		before_prefix_all = App.xslt_module_top_section + before_prefix + '<xsl:if test="count(/' + e + 'List/' + e + ') > 0">\n' + App.xslt_module_top_article 
+		after_prefix_all = '\n' + App.xslt_module_bottom_article + '</xsl:if>' + '\n' + App.xslt_module_bottom_section 
+	}
+	// Begin build
+	var cm = App.xslt_top + App.xslt_module_top + before_prefix_all + App.xslt_module_middle + after_prefix_all + App.xslt_module_bottom + App.xslt_module_top_child + App.xslt_module_child_middle + App.xslt_module_bottom_child + after_prefix + App.xslt_bottom;
 	var rep = new RegExp('XXX', 'g');
 	var repY = new RegExp('YYY', 'g');
 	editor.setValue(cm.replace(rep, e).replace(repY, e.toLowerCase()));
