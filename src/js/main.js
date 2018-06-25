@@ -74,15 +74,19 @@ function __buildModule(e) {
 	var after_prefix = ''
 	var before_prefix_all = ''
 	var after_prefix_all = ''
-	var OldApp = null
-	OldApp = App
+	var cm = ''
+	var OldApp = App
+	var repM = new RegExp('News-Details', 'g');
+	var repX = new RegExp('News-Advanced', 'g');
+	var rep = new RegExp('XXX', 'g');
+	var repY = new RegExp('YYY', 'g');
 	// Apply
 	before_prefix_all = '<xsl:if test="count(/' + e + 'List/' + e + ') > 0">\n' + App.xslt_module_top_section + before_prefix + App.xslt_module_top_article
 	after_prefix_all = '\n' + App.xslt_module_bottom_article + App.xslt_module_bottom_section + '</xsl:if>\n' 
-	
+
 	if (e.toLowerCase() === 'gallery') {
 		before_prefix = '<!--Title-->\n<caption>\n<h1 class="title">\n<xsl:value-of select="/XXXList/ModuleTitle"></xsl:value-of>\n</h1>\n<p class="lead">\n<xsl:value-of select="BriefContent" disable-output-escaping="yes"></xsl:value-of>\n</p>\n</caption>\n'
-		after_prefix = '<!--Begin Gallery Album-->\n<xsl:template match="Images" mode="ImageByAlbum">\n<xsl:if test="position() > 1">\n<a>\n<xsl:attribute name="href">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="title">\n<xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n<img>\n<xsl:attribute name="src">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="title">\n<xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n</img>\n</a>\n</xsl:if>\n</xsl:template>\n\n'
+		after_prefix = '<!--Begin XXX Album-->\n<xsl:template match="Images" mode="ImageByAlbum">\n<xsl:if test="position() > 1">\n<a>\n<xsl:attribute name="href">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="title">\n<xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n<img>\n<xsl:attribute name="src">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="title">\n<xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n</img>\n</a>\n</xsl:if>\n</xsl:template>\n\n'
 		OldApp.xslt_module_child_middle = App.xslt_module_child_gallery_middle
 		before_prefix_all = OldApp.xslt_module_top_section + before_prefix + '<xsl:if test="count(/' + e + 'List/' + e + ') > 0">\n' + OldApp.xslt_module_top_article 
 		after_prefix_all = '\n' + OldApp.xslt_module_bottom_article + '</xsl:if>' + '\n' + OldApp.xslt_module_bottom_section 
@@ -108,22 +112,13 @@ function __buildModule(e) {
 		OldApp.xslt_module_middle = App.xslt_module_news_middle 
 		before_prefix_all = OldApp.xslt_module_top_section + before_prefix + '<xsl:if test="count(/' + e + 'Detail/' + e + 'Other) > 0">\n' + OldApp.xslt_module_top_article
 		after_prefix_all = '\n' + OldApp.xslt_module_bottom_article + '</xsl:if>' + '\n' + OldApp.xslt_module_bottom_section
-	} else {
-		before_prefix = ''
-		after_prefix = ''
-		OldApp.xslt_module_child_middle = App.xslt_module_child_middle
-		OldApp.xslt_module_top_child = App.xslt_module_top_child
-		OldApp.xslt_module_middle = App.xslt_module_middle 
 	}
 	// Begin build
-	var cm = OldApp.xslt_top + OldApp.xslt_module_top + before_prefix_all + OldApp.xslt_module_middle + after_prefix_all + OldApp.xslt_module_bottom + OldApp.xslt_module_top_child + OldApp.xslt_module_child_middle + OldApp.xslt_module_bottom_child + after_prefix + OldApp.xslt_bottom;
-	var repM = new RegExp('News-Details', 'g');
-	var repX = new RegExp('News-Advanced', 'g');
-	var rep = new RegExp('XXX', 'g');
-	var repY = new RegExp('YYY', 'g');
+	cm = OldApp.xslt_top + OldApp.xslt_module_top + before_prefix_all + OldApp.xslt_module_middle + after_prefix_all + OldApp.xslt_module_bottom + OldApp.xslt_module_top_child + OldApp.xslt_module_child_middle + OldApp.xslt_module_bottom_child + after_prefix + OldApp.xslt_bottom;
 	editor.setValue(cm.replace(rep, e).replace(repY, e.toLowerCase()).replace(repX, 'News').replace(repM, 'News'));
 	editor.refresh();
 	inDents() 
+	$('#modules').attr('disabled', 'disabled')
 }
 function __insertTemplateNewValue(e, m, n) {
 	var cm = ''
