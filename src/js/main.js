@@ -79,32 +79,33 @@ function __buildModule(e) {
 		before_prefix = '<!--Title-->\n<caption>\n<h1 class="title">\n<xsl:value-of select="/XXXList/ModuleTitle"></xsl:value-of>\n</h1>\n<p class="lead">\n<xsl:value-of select="BriefContent" disable-output-escaping="yes"></xsl:value-of>\n</p>\n</caption>\n'
 		after_prefix = '<!--Begin Gallery Album-->\n<xsl:template match="Images" mode="ImageByAlbum">\n<xsl:if test="position() > 1">\n<a>\n<xsl:attribute name="href">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="title">\n<xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n<img>\n<xsl:attribute name="src">\n<xsl:value-of select="ImageUrl"></xsl:value-of>\n</xsl:attribute>\n<xsl:attribute name="title">\n<xsl:value-of select="Title" disable-output-escaping="yes"></xsl:value-of>\n</xsl:attribute>\n</img>\n</a>\n</xsl:if>\n</xsl:template>\n\n'
 		App.xslt_module_child_middle = App.xslt_module_child_gallery_middle
-		before_prefix_all = App.xslt_module_top_section + before_prefix + '<xsl:if test="count(/' + e + 'List/' + e + ') > 0">\n' + App.xslt_module_top_article + App.xslt_module_middle 
+		before_prefix_all = App.xslt_module_top_section + before_prefix + '<xsl:if test="count(/' + e + 'List/' + e + ') > 0">\n' + App.xslt_module_top_article 
 		after_prefix_all = '\n' + App.xslt_module_bottom_article + '</xsl:if>' + '\n' + App.xslt_module_bottom_section 
 	} else if (e.toLowerCase() === 'video') {
 		before_prefix = '<!--Title-->\n<caption>\n<h1 class="title">\n<xsl:value-of select="/XXXList/ModuleTitle"></xsl:value-of>\n</h1>\n<p class="lead">\n<xsl:value-of select="BriefContent" disable-output-escaping="yes"></xsl:value-of>\n</p>\n</caption>\n'
 		App.xslt_module_child_middle = App.xslt_module_child_video_middle
-		before_prefix_all = App.xslt_module_top_section + before_prefix + '<xsl:if test="count(/' + e + 'List/' + e + ') > 0">\n' + App.xslt_module_top_article + App.xslt_module_middle 
+		before_prefix_all = App.xslt_module_top_section + before_prefix + '<xsl:if test="count(/' + e + 'List/' + e + ') > 0">\n' + App.xslt_module_top_article 
 		after_prefix_all = '\n' + App.xslt_module_bottom_article + '</xsl:if>' + '\n' + App.xslt_module_bottom_section 
 	} else if (e.toLowerCase() === 'news') {
 		before_prefix = '<!--Title-->\n<caption>\n<h1 class="title">\n<xsl:value-of select="/XXXList/ZoneTitle"></xsl:value-of>\n</h1>\n<p class="lead">\n<xsl:value-of select="BriefContent" disable-output-escaping="yes"></xsl:value-of>\n</p>\n</caption>\n'
 		App.xslt_module_child_middle = App.xslt_module_child_news_middle
-		before_prefix_all = App.xslt_module_top_section + before_prefix + '<xsl:if test="count(/' + e + 'List/' + e + ') > 0">\n' + App.xslt_module_top_article + App.xslt_module_middle 
+		before_prefix_all = App.xslt_module_top_section + before_prefix + '<xsl:if test="count(/' + e + 'List/' + e + ') > 0">\n' + App.xslt_module_top_article 
 		after_prefix_all = '\n' + App.xslt_module_bottom_article + '</xsl:if>' + '\n' + App.xslt_module_bottom_section
 	} else if (e.toLowerCase() === 'news-advanced') {
 		before_prefix = '<!--Title-->\n<caption>\n<h1 class="title">\n<xsl:value-of select="/XXXList/ZoneTitle"></xsl:value-of>\n</h1>\n<p class="lead">\n<xsl:value-of select="BriefContent" disable-output-escaping="yes"></xsl:value-of>\n</p>\n</caption>\n'
 		App.xslt_module_child_middle = App.xslt_module_child_news_advanced_middle
-		before_prefix_all = App.xslt_module_top_section + before_prefix + '<xsl:if test="count(/' + e + 'List/' + e + ') > 0">\n' + App.xslt_module_top_article + App.xslt_module_middle 
+		before_prefix_all = App.xslt_module_top_section + before_prefix + '<xsl:if test="count(/' + e + 'List/' + e + ') > 0">\n' + App.xslt_module_top_article 
 		after_prefix_all = '\n' + App.xslt_module_bottom_article + '</xsl:if>' + '\n' + App.xslt_module_bottom_section
 	} else if (e.toLowerCase() === 'news-details') {
 		before_prefix = '<!--Title-->\n<caption>\n<h1 class="title">\n<xsl:value-of select="/XXXDetail/Title"></xsl:value-of>\n</h1>\n<time>\n<i class="fa fa-calendar mr-2"></i>\n<xsl:value-of select="/XXXDetail/CreatedDate"></xsl:value-of>\n</time>\n<xsl:value-of select="/XXXDetail/EditLink" disable-output-escaping="yes"></xsl:value-of>\n</caption>\n<!--Content-->\n<article class="content">\n<xsl:value-of select="/XXXDetail/FullContent" disable-output-escaping="yes"></xsl:value-of>\n</article>\n<!--Social Networks-->\n<div class="social-networks nav">\n</div>\n<!--Other XXX-->\n'
 		App.xslt_module_child_middle = App.xslt_module_child_news_details_middle
 		App.xslt_module_top_child = App.xslt_module_top_news_child
-		before_prefix_all = App.xslt_module_top_section + before_prefix + '<xsl:if test="count(/' + e + 'Detail/' + e + 'Other) > 0">\n' + App.xslt_module_top_article + App.xslt_module_news_middle 
+		App.xslt_module_middle = App.xslt_module_news_middle 
+		before_prefix_all = App.xslt_module_top_section + before_prefix + '<xsl:if test="count(/' + e + 'Detail/' + e + 'Other) > 0">\n' + App.xslt_module_top_article
 		after_prefix_all = '\n' + App.xslt_module_bottom_article + '</xsl:if>' + '\n' + App.xslt_module_bottom_section
 	}
 	// Begin build
-	var cm = App.xslt_top + App.xslt_module_top + before_prefix_all + after_prefix_all + App.xslt_module_bottom + App.xslt_module_top_child + App.xslt_module_child_middle + App.xslt_module_bottom_child + after_prefix + App.xslt_bottom;
+	var cm = App.xslt_top + App.xslt_module_top + before_prefix_all + App.xslt_module_middle + after_prefix_all + App.xslt_module_bottom + App.xslt_module_top_child + App.xslt_module_child_middle + App.xslt_module_bottom_child + after_prefix + App.xslt_bottom;
 	var repM = new RegExp('News-Details', 'g');
 	var repX = new RegExp('News-Advanced', 'g');
 	var rep = new RegExp('XXX', 'g');
