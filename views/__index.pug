@@ -2,12 +2,14 @@ header.hero.is-primary
 	.container-fluid
 		.hero-body
 			.columns
-				.column.is-three-quarters
+				.column.is-two-thirds
 					h1.title XSLT Builder by Bao Nguyen
 					h2.subtitle
 						| integrate into Canh Cam App 
 				.column
 					.is-pulled-right.columns
+						.column
+							button#convert.button.is-light Convert
 						.column
 							button#indent.button.is-light Indent
 						.column
@@ -21,6 +23,82 @@ header.hero.is-primary
 									option(value="News-Advanced") News Advanced
 									option(value="News-Details") News Details
 									option(value="Zone") Zone
+#box-convert
+	.columns
+		.column
+			h1.title HTML Convert tool
+			.field
+				input#inputdata.input(value="<div class=\"item\">Lorem ipsum</div>")
+			.field
+				input#outputdata.input(value="")
+			.field
+				button#doconvert.button.is-primary Convert
+			h1.title Encode URL
+			.field
+				input#inputdataurl.input(value="http://abc.com/index.html?param=1&anotherParam=2")
+			.field
+				input#outputdataurl.input(value="")
+			.field
+				button#doconverturl.button.is-primary Convert
+		.column
+			h1.title Detailed character
+			.field.is-horizontal
+				.field-label.is-normal
+					label.label Character
+				.field-body
+					p.control
+						.field
+							input#character.input(value="a")
+			.field.is-horizontal
+				.field-label.is-normal
+					label.label Decimal
+				.field-body
+					p.control
+						.field
+							input#decValue.input(value="")
+			.field.is-horizontal
+				.field-label.is-normal
+					label.label Octal
+				.field-body
+					p.control
+						.field
+							input#octValue.input(value="")
+			.field.is-horizontal
+				.field-label.is-normal
+					label.label Hexadecimal
+				.field-body
+					p.control
+						.field
+							input#hexValue.input(value="")
+			.field.is-horizontal
+				.field-label.is-normal
+					label.label Unicode
+				.field-body
+					p.control
+						.field
+							input#uniValue.input(value="")
+			.field.is-horizontal
+				.field-label.is-normal
+					label.label Escaped
+				.field-body
+					p.control
+						.field
+							input#escUniValue.input(value="")
+			.field.is-horizontal
+				.field-label.is-normal
+					label.label HTML Entity
+				.field-body
+					p.control
+						.field
+							input#htmlValue.input(value="")
+			.field.is-horizontal
+				.field-label.is-normal
+					label.label 
+				.field-body
+					p.control
+						.field
+							button#charInfoButton.button.is-primary Convert
+
 .container-fluid#maincode
 	.columns
 		.column.is-three-quarters

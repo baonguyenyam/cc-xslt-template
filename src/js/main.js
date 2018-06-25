@@ -69,6 +69,18 @@ var attributes = [
 ];
 var addnew = [
 ];
+
+var alldortag = {
+	attrs: {
+		"src": [""],
+		"alt": [""],
+		"title": [""],
+		"class": [""],
+		"href": [""],
+		"id": [""],
+		"target": [""]
+	}
+}
 var tags = {
 	"xsl:template": {
 		attrs: {
@@ -102,7 +114,17 @@ var tags = {
 		attrs: {
 			"disable-output-escaping": ["yes", "no"]
 		}
-	}
+	},
+	"article": alldortag,
+	"img": alldortag,
+	"a": alldortag,
+	"div": alldortag,
+	"p": alldortag,
+	"section": alldortag,
+	"article": alldortag,
+	"ul": alldortag,
+	"li": alldortag,
+	"hr": alldortag
 };
 
 function __buildModule(e) {
@@ -203,6 +225,15 @@ function __insertTemplateAttr(e) {
 		e = 'class'
 	}
 	insertText(cm.replace(rep, e) + '\n')
+}
+
+function convertHTML(unsafe) {
+	return unsafe
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;")
+		.replace(/'/g, "&#039;");
 }
 
 function escapeHtml(unsafe) {
@@ -358,6 +389,43 @@ $('#indent').on('click', function (e) {
 	e.preventDefault();
 	inDents() 
 })
+$('#convert').on('click', function (e) {
+	e.preventDefault();
+	$(this).toggleClass('is-warning')
+	$('#box-convert').toggleClass('active')
+	$('#outputdata').val(convertHTML($('#inputdata').val().trim()))
+	$('#outputdataurl').val(encodeURIComponent($('#inputdataurl').val().trim()))
+})
+$('#doconvert').on('click', function (e) {
+	e.preventDefault();
+	$('#outputdata').val(convertHTML($('#inputdata').val().trim()))
+})
+$('#doconverturl').on('click', function (e) {
+	e.preventDefault();
+	$('#outputdataurl').val(encodeURIComponent($('#inputdataurl').val().trim()))
+})
+
+$("#charInfoButton").click(function () {
+
+	var character = $("#character").val().trim();
+	if (!character) {
+		return;
+	}
+	var decimal = character.charCodeAt(0);
+	var octal = decimal.toString(8);
+	var hex = decimal.toString(16);
+	$("#decValue").val(decimal);
+	$("#octValue").val(octal);
+	$("#hexValue").val("0x" + hex);
+	$("#uniValue").val("U+" + hex);
+	var escUni = "" + hex;
+	while (escUni.length < 4) {
+		escUni = "0" + escUni;
+	}
+	$("#escUniValue").val("\\u" + escUni);
+	$("#htmlValue").val("&#" + decimal + ";");
+
+});
 
 function changeX(u) {
 	$('.dropdown-item').each(function () {
