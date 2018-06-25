@@ -73,6 +73,11 @@ function __buildModule(e) {
 	var after_prefix = ''
 	var before_prefix_all = ''
 	var after_prefix_all = ''
+	// Reset 
+	App.xslt_module_child_middle = App.xslt_module_child_middle
+	App.xslt_module_top_child = App.xslt_module_top_child
+	App.xslt_module_middle = App.xslt_module_middle 
+	// Apply
 	before_prefix_all = '<xsl:if test="count(/' + e + 'List/' + e + ') > 0">\n' + App.xslt_module_top_section + before_prefix + App.xslt_module_top_article
 	after_prefix_all = '\n' + App.xslt_module_bottom_article + App.xslt_module_bottom_section + '</xsl:if>\n' 
 	if (e.toLowerCase() === 'gallery') {
@@ -103,6 +108,12 @@ function __buildModule(e) {
 		App.xslt_module_middle = App.xslt_module_news_middle 
 		before_prefix_all = App.xslt_module_top_section + before_prefix + '<xsl:if test="count(/' + e + 'Detail/' + e + 'Other) > 0">\n' + App.xslt_module_top_article
 		after_prefix_all = '\n' + App.xslt_module_bottom_article + '</xsl:if>' + '\n' + App.xslt_module_bottom_section
+	} else {
+		before_prefix = ''
+		after_prefix = ''
+		App.xslt_module_child_middle = App.xslt_module_child_middle
+		App.xslt_module_top_child = App.xslt_module_top_child
+		App.xslt_module_middle = App.xslt_module_middle 
 	}
 	// Begin build
 	var cm = App.xslt_top + App.xslt_module_top + before_prefix_all + App.xslt_module_middle + after_prefix_all + App.xslt_module_bottom + App.xslt_module_top_child + App.xslt_module_child_middle + App.xslt_module_bottom_child + after_prefix + App.xslt_bottom;
