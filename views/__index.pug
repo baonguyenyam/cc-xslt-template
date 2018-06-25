@@ -19,6 +19,7 @@ header.hero.is-primary
 									option(value="Video") Video
 									option(value="News") News Simple
 									option(value="News-Advanced") News Advanced
+									option(value="News-Details") News Details
 									option(value="Zone") Zone
 .container-fluid#maincode
 	.columns
@@ -51,12 +52,21 @@ header.hero.is-primary
 				.cnt 
 					.dropdown
 						button.button.is-primary
-							span.val Item Child Template
+							span.val Call Child Template
 							span.icon.is-small
 								i.fas.fa-angle-down
 					.dropdown-menu
 						.dropdown-content
 							.dropdown-item(old-data-set, data-set='<xsl:apply-templates select="/XXXList/XXX"></xsl:apply-templates>', data-comment="Call XXX Child")
+				.cnt 
+					.dropdown
+						button.button.is-primary
+							span.val Item Child Template
+							span.icon.is-small
+								i.fas.fa-angle-down
+					.dropdown-menu
+						.dropdown-content
+							.dropdown-item(old-data-set, data-set='<xsl:template match="XXX">\n</xsl:template>', data-comment="Begin XXX Child Template")
 				.field
 					h3.title.is-4 Thêm XML
 				.cnt 
