@@ -69,6 +69,41 @@ var attributes = [
 ];
 var addnew = [
 ];
+var tags = {
+	"xsl:template": {
+		attrs: {
+			"match": ["/", "News"],
+			"mode": ["ABCmode"]
+		}
+	},
+	"xsl:apply-templates" : {
+		attrs: {
+			"select": ["/", "/NewsList/News", "/NewsDetail/FullContent"],
+			"mode": ["ABCmode"]
+		}
+	},
+	"xsl:if" : {
+		attrs: {
+			"test": ["position()", "position() = last()", "Title != ''", "count(/NewsList/News) > 0", "IsActive='true'"]
+		}
+	},
+	"xsl:attribute": {
+		attrs: {
+			"name": ["src", "alt", "title", "class", "id", "href", "target"],
+		}
+	},
+	"xsl:value-of" : {
+		attrs: {
+			"select": ["ImageUrl", "Title", "Url", "Target", "CreatedDate", "BriefContent", "SubTitle", "EditLink", "VideoUrl", "position()", "Description", "FullContent"],
+			"disable-output-escaping": ["yes", "no"]
+		}
+	},
+	"xsl:text": {
+		attrs: {
+			"disable-output-escaping": ["yes", "no"]
+		}
+	}
+};
 
 function __buildModule(e) {
 	// Reset 
@@ -242,7 +277,8 @@ $(document).ready(function () {
 			"Ctrl-Space": "autocomplete",
 			"Ctrl-Q": function (cm) { cm.foldCode(cm.getCursor()); }
 		},
-		lint: true
+		lint: true,
+		hintOptions: { schemaInfo: tags }
 	});
 	$('#modules').on('change', function (e) {
 		var repY = new RegExp('News-Details', 'g');
